@@ -1,0 +1,57 @@
+system/v_max: 0.75
+system/dyaw_max: 0.75
+system/camera/pitch: [17.5]
+system/camera/horizontal: [90.0] 
+system/camera/vertical: [60.0] 
+system/bbx/x: 0.85
+system/bbx/y: 0.85
+system/bbx/z: 0.25
+system/bbx/overshoot: 0.35
+system/bbx/x_offset: 0.0
+system/bbx/y_offset: 0.0
+system/bbx/z_offset: -0.25
+
+bsp/enable: true 
+bsp/replanning_distance_min: 0.25 
+bsp/replanning_distance_ratio: 1.5
+bsp/replanning_extension_ratio: 0.25
+bsp/replanning_initial_iterations: 15 
+bsp/replanning_cutoff_iterations: 50 
+bsp/replanning_gain_range: 3.75
+
+nbvp/gain/free: 0.0
+nbvp/gain/occupied: 10.0
+nbvp/gain/unmapped: 100.0
+nbvp/gain/area: 0.0
+nbvp/gain/probabilistic: 1.0
+nbvp/gain/zero: 0.0
+nbvp/gain/range: 3.5
+nbvp/gain/degressive_coeff: 0.5
+nbvp/gain/degressive_switchoffLoops: 5
+nbvp/tree/extension_range: 1.5
+nbvp/tree/exact_root: false
+nbvp/tree/initial_iterations: 150  
+nbvp/tree/cutoff_iterations: 150 
+nbvp/dt: 0.1
+
+init/softStart: true
+init/softStartMinZ: 0.25
+
+bbx/minX: -2.5   
+bbx/minY: -2.5  
+bbx/minZ: 0.0  
+bbx/maxX: 2.5 
+bbx/maxY: 2.5 
+bbx/maxZ: 1.5  
+bbx/explorationExtensionX: 1.25 
+bbx/explorationExtensionY: 1.25 
+bbx/explorationMinZ: -0.25
+bbx/explorationMaxZ: 1.75 
+bbx/softBounds: false
+
+markers/planMarker_lifetime: 10.0 #10.0
+markers/bestPlanMarker_lifetime: 15.0 #15.0
+markers/replanMarker_lifetime: 10.0 #10.0
+markers/bestReplanMarker_lifetime: 15.0 #15.0
+
+pcl_throttle: 0.25

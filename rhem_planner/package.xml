@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>rhem_planner</name>
+  <version>0.0.0</version>
+  <description>Stack for the uncertainty aware receding horizon exploration and mapping pipeline.</description>
+  <maintainer email="cpapachristos@unr.edu">Christos Papachristos</maintainer>
+  <author>Christos Papachristos</author>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>volumetric_mapping</run_depend>
+
+</package>

@@ -1,0 +1,50 @@
+# Whitelist this file
+!.gitignore
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+
+## Compiled Static libraries
+#*.lai
+#*.la
+#*.a
+#*.lib
+
+# Fortran module files
+*.mod
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Eclipse stuff
+.project
+.cproject
+.settings
+
+# Temporary text files
+*~
+
+# Thirdparty build devel and data folders
+build/
+devel/
+data/
+
+
+# ROS stuff
+*.bag
+*.active

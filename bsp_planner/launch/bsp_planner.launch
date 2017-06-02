@@ -1,0 +1,33 @@
+<!-- bsp_planner.launch -->
+<launch>
+
+    <node name="bsp_planner" pkg="bsp_planner" type="bsp_planner" respawn="false" output="screen">
+        <!-- volumetric_mapping params --> 
+	<param name="tf_frame" type="string" value="/world" />
+	<param name="treat_unknown_as_occupied" type="boolean" value="False" />
+	<param name="change_detection_enabled" type="boolean" value="False" />
+	<param name="resolution" type="double" value="0.20" />
+	<param name="visualize_min_z" type="double" value="-0.5" />
+	<param name="visualize_max_z" type="double" value="2.5" />
+	<param name="sensor_max_range" type="double" value="7.5" />
+        <param name="probability_hit" type="double" value="0.65" />
+        <param name="probability_miss" type="double" value="0.4" /> 
+        <param name="threshold_min" type="double" value="0.12" />
+        <param name="threshold_max" type="double" value="0.97" /> 
+        <param name="threshold_occupancy" type="double" value="0.7" />
+	<param name="map_publish_frequency" type="double" value="2.0" />
+        <!-- bsp_planner params, "pose" or "odometry" must be present for bsp_planner to begin, "pointcloud_throttled" used to populate map -->
+	<remap from="pose" to="msf_core/pose" />
+	<remap from="odometry" to="rovio/odometry" />
+	<remap from="pointcloud_throttled" to="stereo_vision"/> 
+        <!-- bsp_planner required services to make belief-state (uncertainty, map, landmarks) transactions -->
+        <remap from="bsp_filter/propagate_filter_state" to="bsp_rovio/propagate_filter_state" />
+        <remap from="slam_filter/send_filter_state" to="rovio/send_filter_state" /> 
+        <!-- bsp_planner planning parameters -->
+	<rosparam command="load" file="$(find bsp_planner)/cfg/bsp_settings.yaml" />
+    </node>
+
+    <!-- how to make a test call of planning service bsp_srv -->
+    <!-- rosservice call /bsp_planner '{header: {stamp: now, frame_id: world}}' -->   
+    
+</launch>
