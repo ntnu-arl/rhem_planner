@@ -1,0 +1,43 @@
+<!-- rhem_demo.launch -->
+<launch>
+
+    <!-- Current (rhem_demo) folder for settings files --> 
+    <arg name="rhem_demo_folder" value="$(find rhem_planner)/../rhem_demo" />
+
+
+    <!-- ROS settings, rviz, rosbag for rhem_demo (use_sim_time and clock-based rosbag for playback) --> 
+    <param name="/use_sim_time" value="true"/>
+    <node name="rhem_demo_player" pkg="rosbag" type="play" args="--clock $(arg rhem_demo_folder)/icra17_visensor_data.bag" output="screen" />     
+    <node name="rhem_demo_rviz" pkg="rviz" type="rviz" args="-d $(find rhem_planner)/rviz/rhem.rviz" output="log" />
+
+
+    <!-- Launch rhem_planner demo --> 
+    <include file="$(find rhem_planner)/launch/rhem_exploration.launch">
+      <!-- General settings, values set according to icra17_bsp_settings.yaml (camera-2-body mounting) and icra17_visensor.info (imu-2-camera extrinsics) --> 
+      <arg name="root2body_Tx" value="-0.105" />
+      <arg name="root2body_Ty" value="0.0" />
+      <arg name="root2body_Tz" value="0.065" />
+      <arg name="root2body_Rz" value="0.0" />
+      <arg name="root2body_Ry" value="-0.235619449" /> <!-- 13.5[deg] around y (camera mounted with downwards-looking pitch) -->
+      <arg name="root2body_Rx" value="0.0" />
+      <arg name="root2pointcloud_Tx" value="-0.100"/> <!-- fix steady stereo offset -->
+      <arg name="root2pointcloud_Ty" value="0.0"/>    <!-- fix steady stereo offset -->
+      <arg name="root2pointcloud_Tz" value="0.0017"/> <!-- fix steady stereo offset -->
+      <arg name="root2pointcloud_Rz" value="-1.583886296" />   <!-- -(90 + 0.75)[deg] around z (1st rotation in order), rotate and fix steady stereo offset -->
+      <arg name="root2pointcloud_Ry" value="0.0" />            <!--   0.0[deg] around y (2nd rotation in order) -->
+      <arg name="root2pointcloud_Rx" value="-1.57079632679" /> <!-- -90.0[deg] around x (3rd rotation in order) -->
+      <!-- Estimation and Propagation pipeline settings --> 
+      <arg name="filter_config" value="$(arg rhem_demo_folder)/icra17_visensor.info" />
+      <arg name="camera0_config" value="$(arg rhem_demo_folder)/icra17_visensor_cam0.yaml" />
+      <arg name="camera1_config" value="$(arg rhem_demo_folder)/icra17_visensor_cam1.yaml" />
+      <!-- Planner settings --> 
+      <arg name="map_min_z" default="-0.5" />
+      <arg name="map_max_z" default="5.0" />
+      <arg name="planner_settings" value="$(arg rhem_demo_folder)/icra17_bsp_settings.yaml" />
+    </include>
+
+
+    <!-- how to make a test call of planning service bsp_srv -->
+    <!-- rosservice call /bsp_planner '{header: {stamp: now, frame_id: world}}' -->   
+
+</launch>

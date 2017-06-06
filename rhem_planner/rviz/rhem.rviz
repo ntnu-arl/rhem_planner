@@ -39,7 +39,7 @@ Visualization Manager:
       Name: Grid
       Normal Cell Count: 0
       Offset:
-        X: 4
+        X: 0
         Y: 0
         Z: 0
       Plane: XY
@@ -88,7 +88,7 @@ Visualization Manager:
       Marker Topic: /bsp_rovio/frustum
       Name: bsp_frustum
       Namespaces:
-        frustum: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -96,7 +96,7 @@ Visualization Manager:
       Marker Topic: /bsp_rovio/bearing_arrows
       Name: bsp_bearing_arrows
       Namespaces:
-        bearing_arrow: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -125,33 +125,29 @@ Visualization Manager:
       Queue Size: 100
       Value: false
     - Class: rviz/MarkerArray
-      Enabled: true
+      Enabled: false
       Marker Topic: /rePlanningPath
       Name: bsp_rrt
       Namespaces:
-        vp_orientations: true
-        vp_positions: true
+        {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /bestRePlanningPath
       Name: bsp_best
       Namespaces:
-        vp_orientations_best: true
-        vp_positions_best: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
-      Enabled: true
+      Enabled: false
       Marker Topic: /rePlanningPathStats
       Name: bsp_stats
       Namespaces:
-        vp_distance: true
-        vp_dopt: true
-        vp_reconnection: true
+        {}
       Queue Size: 100
-      Value: true
+      Value: false
     - Class: rviz/Axes
       Enabled: true
       Length: 0.25
@@ -159,6 +155,43 @@ Visualization Manager:
       Radius: 0.025
       Reference Frame: body
       Value: true
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 0.25
+      Name: stereo_link
+      Radius: 0.025
+      Reference Frame: stereo_link
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: rgb
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 100
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 255
+      Min Color: 0; 0; 0
+      Min Intensity: 1
+      Name: stereo_pointcloud
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.01
+      Style: Flat Squares
+      Topic: /stereo_pointcloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: false
+      Value: false
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /bsp_planner/octomap_occupied
@@ -167,6 +200,14 @@ Visualization Manager:
         map: true
       Queue Size: 100
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: false
+      Marker Topic: /bsp_planner/octomap_free
+      Name: map_free
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
@@ -191,22 +232,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 3.6446
+      Distance: 4.37712
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.139403
-        Y: 0.862232
+        X: 0.374237
+        Y: 0.947405
         Z: 9.28382e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.759164
+      Pitch: 0.309164
       Target Frame: imu
       Value: ThirdPersonFollower (rviz)
-      Yaw: 2.17921
+      Yaw: 2.96921
     Saved: ~
 Window Geometry:
   Displays:

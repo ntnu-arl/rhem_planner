@@ -1,0 +1,14 @@
+###### Camera Calibration File For Cam 0 of UNR VI Sensor ######
+image_width: 752
+image_height: 480
+camera_name: cam0
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [467.8344976643452, 0.0, 385.45908032, 0.0, 467.8856232794336, 252.720865703, 0.0, 0.0, 1.0]
+### data: [467.8344976643452, 0.0, 366.5409196803786, 0.0, 467.8856232794336, 227.27913429703935, 0.0, 0.0, 1.0] ###!!!USED TO CALCULATE NEW PRICIPAL POINTS (images are now reversed in driver side)!!!###
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data:  [-0.29767800089930535, 0.09171660731208621, 0.00018589015825779475, 1.1880984515560517e-05, 0.0]

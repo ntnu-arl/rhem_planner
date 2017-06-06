@@ -1,22 +1,22 @@
 system/v_max: 0.75
 system/dyaw_max: 0.75
-system/camera/pitch: [17.5]
+system/camera/pitch: [13.5]
 system/camera/horizontal: [90.0] 
 system/camera/vertical: [60.0] 
-system/bbx/x: 0.85
-system/bbx/y: 0.85
-system/bbx/z: 0.25
-system/bbx/overshoot: 0.35
+system/bbx/x: 1.35
+system/bbx/y: 1.35
+system/bbx/z: 0.35
+system/bbx/overshoot: 0.25
 system/bbx/x_offset: 0.0
 system/bbx/y_offset: 0.0
-system/bbx/z_offset: -0.125
+system/bbx/z_offset: -0.175
 
 bsp/enable: true 
-bsp/replanning_distance_min: 0.25 
+bsp/replanning_distance_min: 0.35 
 bsp/replanning_distance_ratio: 1.5
 bsp/replanning_extension_ratio: 0.25
 bsp/replanning_initial_iterations: 15 
-bsp/replanning_cutoff_iterations: 50 
+bsp/replanning_cutoff_iterations: 75 
 bsp/replanning_gain_range: 7.5
 
 nbvp/gain/free: 0.0
@@ -37,13 +37,13 @@ nbvp/dt: 0.1
 init/softStart: true
 init/softStartMinZ: 0.5
 
-bbx/minX: -2.5   
+bbx/minX: 0.0   
 bbx/minY: -2.5  
-bbx/minZ: 0.0  
-bbx/maxX: 2.5 
+bbx/minZ: 0.75 
+bbx/maxX: 10.0 
 bbx/maxY: 2.5 
-bbx/maxZ: 1.5  
-bbx/explorationExtensionX: 2.5 
+bbx/maxZ: 1.5 
+bbx/explorationExtensionX: 2.5
 bbx/explorationExtensionY: 2.5 
 bbx/explorationMinZ: -0.25
 bbx/explorationMaxZ: 1.75 

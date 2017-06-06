@@ -1,18 +1,58 @@
 <!-- rhem_exploration.launch -->
 <launch>
 
+    <!-- General settings, default values set to match the ones in bsp_planner/cfg/bsp_settings.yaml (camera-2-body mounting) and rovio/cfg/rovio.info (imu-2-camera extrinsics) --> 
+    <arg name="root_tf" default="imu" /> <!-- the frame w.r.t. which other frames are expressed (imu frame published by Estimation pipeline - rovio) --> 
+    <arg name="body_tf" default="body" /> <!-- the frame w.r.t. which planning is calculated (vehicle body frame) --> 
+    <arg name="pointcloud_tf" default="stereo_link" /> <!-- the frame w.r.t. which the 3D pointcloud is published (stereo/depth camera frame) --> 
+    <arg name="root2body_Tx" default="0.0" />
+    <arg name="root2body_Ty" default="0.0" />
+    <arg name="root2body_Tz" default="0.0" />
+    <arg name="root2body_Rz" default="3.1415926536" /> <!--  90[deg] axis rotation -->
+    <arg name="root2body_Ry" default="-1.265363708" /> <!-- -90[deg] axis rotation + 17.5[deg] around y (camera mounted with downwards-looking pitch) -->
+    <arg name="root2body_Rx" default="0.0" />
+    <arg name="root2pointcloud_Tx" default="-0.0102" />
+    <arg name="root2pointcloud_Ty" default="-0.0017" />
+    <arg name="root2pointcloud_Tz" default="0.0199" />
+    <arg name="root2pointcloud_Rz" default="-0.0195" />   <!-- -1.12[deg] around z (1st rotation in order) -->
+    <arg name="root2pointcloud_Ry" default="0.0079" />  <!--  0.45[deg] around y (2nd rotation in order) -->
+    <arg name="root2pointcloud_Rx" default="1.558" /> <!-- 89.25[deg] around x (3rd rotation in order) -->
+    <!-- Estimation and Propagation pipeline settings --> 
+    <arg name="filter_config" default="$(find rovio)/cfg/rovio.info" />
+    <arg name="camera0_config" default="$(find rovio)/cfg/euroc_cam0.yaml" />
+    <arg name="camera1_config" default="$(find rovio)/cfg/euroc_cam1.yaml" />
+    <!-- Planner settings --> 
+    <arg name="map_min_z" default="-0.5" />
+    <arg name="map_max_z" default="7.5" />
+    <arg name="planner_pose" default="msf_core/pose" />
+    <arg name="planner_odometry" default="rovio/odometry" />
+    <arg name="planner_pointcloud" default="stereo_pointcloud" />
+    <arg name="planner_pointcloud_tf" default="$(arg pointcloud_tf)" />
+    <arg name="propagate_filter_state_service" default="bsp_rovio/propagate_filter_state" />
+    <arg name="send_filter_state_service" default="rovio/send_filter_state" />
+    <arg name="planner_settings" default="$(find bsp_planner)/cfg/bsp_settings.yaml" />
+
+
+    <!-- Publish necessary transformations --> 
+    <node name="body_tf" pkg="tf" type="static_transform_publisher" respawn="true" 
+          args="$(arg root2body_Tx) $(arg root2body_Ty) $(arg root2body_Tz) $(arg root2body_Rx) $(arg root2body_Ry) $(arg root2body_Rz)
+          $(arg root_tf) $(arg body_tf) 100" output="log"/>
+    <node name="stereo_tf" pkg="tf" type="static_transform_publisher" respawn="true"
+          args="$(arg root2pointcloud_Tx) $(arg root2pointcloud_Ty) $(arg root2pointcloud_Tz) $(arg root2pointcloud_Rx) $(arg root2pointcloud_Ry) $(arg root2pointcloud_Rz)
+          $(arg root_tf) $(arg pointcloud_tf) 100" output="log"/>
+
     <!-- Launch the Estimation pipeline --> 
     <node name="rovio" pkg="rovio" type="rovio_node" respawn="true" output="screen">
-      <param name="filter_config" value="$(find rovio)/cfg/rovio.info" />
-      <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam0.yaml" />
-      <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam1.yaml" />
+      <param name="filter_config" value="$(arg filter_config)" />
+      <param name="camera0_config" value="$(arg camera0_config)" />
+      <param name="camera1_config" value="$(arg camera1_config)" />
     </node>
 
     <!-- Launch the Propagation pipeline --> 
     <node name="bsp_rovio" pkg="rovio" type="rovio_bsp_node" respawn="false" output="screen">
-      <param name="filter_config" value="$(find rovio)/cfg/rovio.info" />
-      <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam0.yaml" />
-      <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam1.yaml" />
+      <param name="filter_config" value="$(arg filter_config)" />
+      <param name="camera0_config" value="$(arg camera0_config)" />
+      <param name="camera1_config" value="$(arg camera1_config)" />
     </node>
 
     <!-- Launch the BSP planner --> 
@@ -22,8 +62,8 @@
 	<param name="treat_unknown_as_occupied" type="boolean" value="False" />
 	<param name="change_detection_enabled" type="boolean" value="False" />
 	<param name="resolution" type="double" value="0.20" />
-	<param name="visualize_min_z" type="double" value="-0.5" />
-	<param name="visualize_max_z" type="double" value="2.5" />
+	<param name="visualize_min_z" type="double" value="$(arg map_min_z)" />
+	<param name="visualize_max_z" type="double" value="$(arg map_max_z)" />
 	<param name="sensor_max_range" type="double" value="7.5" />
         <param name="probability_hit" type="double" value="0.65" />
         <param name="probability_miss" type="double" value="0.4" /> 
@@ -32,14 +72,14 @@
         <param name="threshold_occupancy" type="double" value="0.7" />
 	<param name="map_publish_frequency" type="double" value="2.0" />
         <!-- bsp_planner params, "pose" or "odometry" must be present for bsp_planner to begin, "pointcloud_throttled" used to populate map -->
-	<remap from="pose" to="msf_core/pose" />
-	<remap from="odometry" to="rovio/odometry" />
-	<remap from="pointcloud_throttled" to="stereo_vision"/> 
+	<!--<remap from="pose" to="$(arg planner_pose)" />-->
+	<remap from="odometry" to="$(arg planner_odometry)" />
+	<remap from="pointcloud_throttled" to="$(arg planner_pointcloud)"/> 
         <!-- bsp_planner required services to make belief-state (uncertainty, map, landmarks) transactions -->
-        <remap from="bsp_filter/propagate_filter_state" to="bsp_rovio/propagate_filter_state" />
-        <remap from="slam_filter/send_filter_state" to="rovio/send_filter_state" /> 
+        <remap from="bsp_filter/propagate_filter_state" to="$(arg propagate_filter_state_service)" />
+        <remap from="slam_filter/send_filter_state" to="$(arg send_filter_state_service)" /> 
         <!-- bsp_planner planning parameters -->
-	<rosparam command="load" file="$(find bsp_planner)/cfg/bsp_settings.yaml" />
+	<rosparam command="load" file="$(arg planner_settings)" />
     </node>
 
     <!-- how to make a test call of planning service bsp_srv -->
