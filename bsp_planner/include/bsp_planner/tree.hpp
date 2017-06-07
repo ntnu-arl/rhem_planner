@@ -129,8 +129,7 @@ void bspPlanning::TreeBase<stateVec>::clearRootStateBBX(Eigen::Vector3d& boundin
   }
   else{
     boundingBox[2] = deltaTopZ;
-    const double epsilon = manager_->getResolution()/2;
-    manager_->setFree(Eigen::Vector3d(root_[0],root_[1],deltaTopZ/2-epsilon), boundingBox); //Creates required non-existing nodes
+    manager_->setFree(Eigen::Vector3d(root_[0],root_[1],minZ+deltaTopZ/2), boundingBox); //Creates required non-existing nodes
   }
 }
 

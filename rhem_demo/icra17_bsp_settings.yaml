@@ -19,10 +19,9 @@ bsp/replanning_initial_iterations: 15
 bsp/replanning_cutoff_iterations: 75 
 bsp/replanning_gain_range: 7.5
 
+nbvp/gain/unmapped: 100.0
 nbvp/gain/free: 0.0
 nbvp/gain/occupied: 10.0
-nbvp/gain/unmapped: 100.0
-nbvp/gain/area: 0.0
 nbvp/gain/probabilistic: 1.0
 nbvp/gain/zero: 0.0
 nbvp/gain/range: 3.5
@@ -35,7 +34,7 @@ nbvp/tree/cutoff_iterations: 150
 nbvp/dt: 0.1
 
 init/softStart: true
-init/softStartMinZ: 0.5
+init/softStartMinZ: 0.25
 
 bbx/minX: 0.0   
 bbx/minY: -2.5  
@@ -47,7 +46,6 @@ bbx/explorationExtensionX: 2.5
 bbx/explorationExtensionY: 2.5 
 bbx/explorationMinZ: -0.25
 bbx/explorationMaxZ: 1.75 
-bbx/softBounds: false
 
 markers/planMarker_lifetime: 10.0
 markers/bestPlanMarker_lifetime: 15.0

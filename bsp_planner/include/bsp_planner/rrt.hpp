@@ -115,20 +115,18 @@ void bspPlanning::RrtTree::iterate(int numRuns, rovio::BSP_SrvSendFilterState::R
       continue;
     }
     newState += rootNode_->state_;
-    if (!params_.softBounds_) {
-      if (newState.x() + params_.boundingBoxOffset_.x() < params_.minX_ + 0.5 * params_.boundingBox_.x()) {
-        continue;
-      } else if (newState.y() + params_.boundingBoxOffset_.y() < params_.minY_ + 0.5 * params_.boundingBox_.y()) {
-        continue;
-      } else if (newState.z() + params_.boundingBoxOffset_.z() < params_.minZ_ + 0.5 * params_.boundingBox_.z()) {
-        continue;
-      } else if (newState.x() + params_.boundingBoxOffset_.x() > params_.maxX_ - 0.5 * params_.boundingBox_.x()) {
-        continue;
-      } else if (newState.y() + params_.boundingBoxOffset_.y() > params_.maxY_ - 0.5 * params_.boundingBox_.y()) {
-        continue;
-      } else if (newState.z() + params_.boundingBoxOffset_.z() > params_.maxZ_ - 0.5 * params_.boundingBox_.z()) {
-        continue;
-      }
+    if (newState.x() + params_.boundingBoxOffset_.x() < params_.minX_ + 0.5 * params_.boundingBox_.x()) {
+      continue;
+    } else if (newState.y() + params_.boundingBoxOffset_.y() < params_.minY_ + 0.5 * params_.boundingBox_.y()) {
+      continue;
+    } else if (newState.z() + params_.boundingBoxOffset_.z() < params_.minZ_ + 0.5 * params_.boundingBox_.z()) {
+      continue;
+    } else if (newState.x() + params_.boundingBoxOffset_.x() > params_.maxX_ - 0.5 * params_.boundingBox_.x()) {
+      continue;
+    } else if (newState.y() + params_.boundingBoxOffset_.y() > params_.maxY_ - 0.5 * params_.boundingBox_.y()) {
+      continue;
+    } else if (newState.z() + params_.boundingBoxOffset_.z() > params_.maxZ_ - 0.5 * params_.boundingBox_.z()) {
+      continue;
     }
     // Bsp: Sample only in explicitly Free (Mapped) space
     if (volumetric_mapping::OctomapManager::CellStatus::kFree != manager_->getCellStatusBoundingBox(Eigen::Vector3d(newState[0],newState[1],newState[2])+params_.boundingBoxOffset_,params_.boundingBox_)){
@@ -436,20 +434,18 @@ while ((lastLoop || (!reGainFound() || loopCount < bspReplanningInitIterations))
       newState[0] = newState_tfed.x();
       newState[1] = newState_tfed.y();
       newState[2] = newState_tfed.z();
-      if (!params_.softBounds_) {
-        if (newState.x() + params_.boundingBoxOffset_.x() < params_.minX_ + 0.5 * params_.boundingBox_.x()) {
-          continue;
-        } else if (newState.y() + params_.boundingBoxOffset_.y() < params_.minY_ + 0.5 * params_.boundingBox_.y()) {
-          continue;
-        } else if (newState.z() + params_.boundingBoxOffset_.z() < params_.minZ_ + 0.5 * params_.boundingBox_.z()) {
-          continue;
-        } else if (newState.x() + params_.boundingBoxOffset_.x() > params_.maxX_ - 0.5 * params_.boundingBox_.x()) {
-          continue;
-        } else if (newState.y() + params_.boundingBoxOffset_.y() > params_.maxY_ - 0.5 * params_.boundingBox_.y()) {
-          continue;
-        } else if (newState.z() + params_.boundingBoxOffset_.z() > params_.maxZ_ - 0.5 * params_.boundingBox_.z()) {
-          continue;
-        }
+      if (newState.x() + params_.boundingBoxOffset_.x() < params_.minX_ + 0.5 * params_.boundingBox_.x()) {
+        continue;
+      } else if (newState.y() + params_.boundingBoxOffset_.y() < params_.minY_ + 0.5 * params_.boundingBox_.y()) {
+        continue;
+      } else if (newState.z() + params_.boundingBoxOffset_.z() < params_.minZ_ + 0.5 * params_.boundingBox_.z()) {
+        continue;
+      } else if (newState.x() + params_.boundingBoxOffset_.x() > params_.maxX_ - 0.5 * params_.boundingBox_.x()) {
+        continue;
+      } else if (newState.y() + params_.boundingBoxOffset_.y() > params_.maxY_ - 0.5 * params_.boundingBox_.y()) {
+        continue;
+      } else if (newState.z() + params_.boundingBoxOffset_.z() > params_.maxZ_ - 0.5 * params_.boundingBox_.z()) {
+        continue;
       }
       // Bsp: Sample only in explicitly Free (Mapped) space
       if (volumetric_mapping::OctomapManager::CellStatus::kFree != manager_->getCellStatusBoundingBox(Eigen::Vector3d(newState[0],newState[1],newState[2])+params_.boundingBoxOffset_,params_.boundingBox_))

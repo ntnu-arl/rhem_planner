@@ -28,7 +28,7 @@ The *Planning* pipeline performs RRT-based sampling to reach the 1st layer's nex
 
 # Staging the stack
 
-First, download the **rhem_planner** stack, which contains the packages above. Navigate to the source folder of your ros workspace and:
+First, download the **rhem_planner** stack, which contains the packages above. Navigate to the source folder of your ros catkin workspace and:
 
 ```sh
 git clone https://github.com/unr-arl/rhem_planner.git
@@ -44,7 +44,7 @@ Make sure you have the following dependencies:
 * [ROS](http://wiki.ros.org/)
 * [Octomap](http://wiki.ros.org/octomap)
 
-Navigate to the source folder of your ros workspace and compile with catkin:
+Navigate back to your ros catkin workspace folder and proceed with a Release build:
 
 ```sh
 catkin_make -DCMAKE_BUILD_TYPE=Release

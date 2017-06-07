@@ -368,10 +368,6 @@ bool bspPlanning::bspPlanner<stateVec>::setParams()
   if (!ros::param::get(ns + "/nbvp/gain/unmapped", params_.igUnmapped_)) {
     ROS_WARN("No gain coefficient for unmapped cells specified. Looking for %s. Default is 1.0.", (ns + "/nbvp/gain/unmapped").c_str());
   }
-  params_.igArea_ = 1.0;
-  if (!ros::param::get(ns + "/nbvp/gain/area", params_.igArea_)) {
-    ROS_WARN("No gain coefficient for mesh area specified. Looking for %s. Default is 1.0.", (ns + "/nbvp/gain/area").c_str());
-  }
   params_.degressiveCoeff_ = 0.25;
   if (!ros::param::get(ns + "/nbvp/gain/degressive_coeff", params_.degressiveCoeff_)) {
     ROS_WARN("No degressive factor for gain accumulation specified. Looking for %s. Default is 0.25.", (ns + "/nbvp/gain/degressive_coeff").c_str());
@@ -447,10 +443,6 @@ bool bspPlanning::bspPlanner<stateVec>::setParams()
   if (!ros::param::get(ns + "/bbx/explorationMaxZ", params_.explorationMaxZ_)) {
     ROS_WARN("No BBx z-max value for IG collection (exploration space) specified. Looking for %s", (ns + "/bbx/explorationMaxZ").c_str());
     ret = false;
-  }
-  params_.softBounds_ = false;
-  if (!ros::param::get(ns + "/bbx/softBounds", params_.softBounds_)) {
-    ROS_WARN("Not specified whether scenario bounds are soft or hard. Looking for %s. Default is false", (ns + "/bbx/softBounds").c_str());
   }
   params_.boundingBox_[0] = 0.5;
   if (!ros::param::get(ns + "/system/bbx/x", params_.boundingBox_[0])) {

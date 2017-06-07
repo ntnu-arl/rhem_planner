@@ -89,7 +89,6 @@ struct Params
   double igFree_;
   double igOccupied_;
   double igUnmapped_;
-  double igArea_;
   double gainRange_;
   double degressiveCoeff_;
   double zero_gain_;
@@ -109,7 +108,6 @@ struct Params
   double maxX_;
   double maxY_;
   double maxZ_;
-  bool softBounds_;
   Eigen::Vector3d boundingBox_;
 
   //Exploratory behavior modifiers

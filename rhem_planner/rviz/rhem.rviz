@@ -112,8 +112,7 @@ Visualization Manager:
       Marker Topic: /bestPlanningPath
       Name: nbv_best
       Namespaces:
-        vp_orientations_best: true
-        vp_positions_best: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -124,6 +123,14 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: false
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /planningWorkspace
+      Name: bsp_workspace
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: false
       Marker Topic: /rePlanningPath
