@@ -87,8 +87,8 @@ class bspPlanner
  public:
 
   //BSP service structures
-  rovio::BSP_SrvSendFilterState::Request rovio_bspSendFilterStateSrv_request;
-  rovio::BSP_SrvSendFilterState::Response rovio_bspSendFilterStateSrv_response;
+  bsp_msgs::BSP_SrvSendFilterState::Request bspMsgs_sendFilterStateSrv_request;
+  bsp_msgs::BSP_SrvSendFilterState::Response bspMsgs_sendFilterStateSrv_response;
 
   typedef std::vector<stateVec> vector_t;
   RrtTree * tree_;

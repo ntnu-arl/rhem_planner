@@ -1,0 +1,16 @@
+int32 nMax
+#int32 nLevels
+#int32 patchSize
+int32 nCam
+#int32 nPose
+geometry_msgs/Vector3 pos_WrWM
+geometry_msgs/Vector3 vel_MvM
+geometry_msgs/Vector3 acb
+geometry_msgs/Vector3 gyb
+geometry_msgs/Quaternion att_qWM
+geometry_msgs/Vector3[] vep_MrMC
+geometry_msgs/Quaternion[] vea_qCM
+ROVIO_RobocentricFeatureElementMsg[] fea
+geometry_msgs/Vector3 pop_IrIW
+geometry_msgs/Quaternion poa_qWI
+# aux

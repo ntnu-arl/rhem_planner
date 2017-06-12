@@ -39,13 +39,13 @@
 #include <octomap_world/octomap_manager.h>
 
 //Bsp: BSP pipeline messages and services
-#include <rovio/BSP_Point2fMsg.h>
-#include <rovio/BSP_TrajectoryReferenceMsg.h>
-#include <rovio/BSP_RobocentricFeatureElementMsg.h>
-#include <rovio/BSP_StateMsg.h>
-#include <rovio/BSP_FilterStateMsg.h>
-#include <rovio/BSP_SrvSendFilterState.h>
-#include <rovio/BSP_SrvPropagateFilterState.h>
+#include <bsp_msgs/ROVIO_Point2fMsg.h>
+#include <bsp_msgs/ROVIO_RobocentricFeatureElementMsg.h>
+#include <bsp_msgs/ROVIO_StateMsg.h>
+#include <bsp_msgs/ROVIO_FilterStateMsg.h>
+#include <bsp_msgs/BSP_TrajectoryReferenceMsg.h>
+#include <bsp_msgs/BSP_SrvSendFilterState.h>
+#include <bsp_msgs/BSP_SrvPropagateFilterState.h>
 #include <eigen_conversions/eigen_msg.h>
 
 namespace bspPlanning {
@@ -148,7 +148,7 @@ class Node
   double distance_;
 
   //Annotated Belief State
-  rovio::BSP_FilterStateMsg bsp_belief_state_;
+  bsp_msgs::ROVIO_FilterStateMsg bsp_belief_state_;
 
   //Characteristics
   int id_;
@@ -198,9 +198,9 @@ class TreeBase
   void clearRootStateBBX(Eigen::Vector3d& boundingBox, const double& minZ = -std::numeric_limits<double>::infinity());
 
   //BSP planning
-  virtual void initialize(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
-  virtual void iterate(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
-  virtual bool resampleBestEdge(int numReRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
+  virtual void initialize(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
+  virtual void iterate(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
+  virtual bool resampleBestEdge(int numReRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response) = 0;
   virtual void clear() = 0;
   virtual void memorizeBestBranch() = 0;
 

@@ -1,0 +1,6 @@
+octomap_msgs/Octomap filterStateMap
+ROVIO_FilterStateMsg filterStateMsgInit
+BSP_TrajectoryReferenceMsg[] vecTrajectoryReferenceMsg
+---
+time filterStateMap_stamp
+ROVIO_FilterStateMsg filterStateMsgFinal

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <name>bsp_msgs</name>
+  <version>0.0.0</version>
+  <description>Messages for the belief space propagation planner package.</description>
+  <maintainer email="cpapachristos@unr.edu">Christos Papachristos</maintainer>
+  <author>Christos Papachristos</author>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>message_runtime</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+    <build_depend>octomap_msgs</build_depend>
+
+  <run_depend>message_generation</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+    <run_depend>octomap_msgs</run_depend>
+
+</package>

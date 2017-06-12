@@ -96,7 +96,7 @@ void bspPlanning::RrtTree::setStateFromOdometryMsg(const nav_msgs::Odometry& pos
   root_[3] = tf::getYaw(quat);
 }
 
-void bspPlanning::RrtTree::iterate(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
+void bspPlanning::RrtTree::iterate(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
 {
   //New configuration is sampled and added to the tree.
   StateVec newState;
@@ -204,7 +204,7 @@ void bspPlanning::RrtTree::iterate(int numRuns, rovio::BSP_SrvSendFilterState::R
 
 }
 
-void bspPlanning::RrtTree::initialize(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
+void bspPlanning::RrtTree::initialize(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
 {
   //Initialize the tree, including insertion of remainder of previous best branch.
   g_ID_ = 0;
@@ -312,7 +312,7 @@ void bspPlanning::RrtTree::initialize(int numRuns, rovio::BSP_SrvSendFilterState
 
 }
 
-bool bspPlanning::RrtTree::resampleBestEdge(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
+bool bspPlanning::RrtTree::resampleBestEdge(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response)
 {
 //Bsp: This function preforms 2nd-level RRT resampling around the 1st-level best-path's edge 
   bspPlanning::Node<StateVec> * targetNode = bestNode_;
@@ -570,8 +570,8 @@ while ((lastLoop || (!reGainFound() || loopCount < bspReplanningInitIterations))
 
     //Bsp: uncertainty propagation transactions, transfer filter (belief) state to propagation pipeline, re-acquire new (belief) state as a response and store, response also includes optimality metric
     if (ros::service::exists("bsp_filter/propagate_filter_state", false)){
-      rovio::BSP_SrvPropagateFilterState::Request rovio_bspPropagateFilterStateSrv_request;
-      rovio::BSP_SrvPropagateFilterState::Response rovio_bspPropagateFilterStateSrv_response;
+      bsp_msgs::BSP_SrvPropagateFilterState::Request bspMsgs_propagateFilterStateSrv_request;
+      bsp_msgs::BSP_SrvPropagateFilterState::Response bspMsgs_propagateFilterStateSrv_response;
       //Bsp: (Optional) octomap population
       octomap_msgs::GetOctomap::Request octomapWorld_getMapSrv_request;
       static octomap_msgs::GetOctomap::Response octomapWorld_getMapSrv_response;
@@ -591,13 +591,13 @@ while ((lastLoop || (!reGainFound() || loopCount < bspReplanningInitIterations))
       }
       //Bsp: No need to fill out on every re-planning call (last available map from slam pipeline remains the same), propagation pipepline is configured to handle working with last available map 
       else if (octomapWorld_getMapSrv_response.map.header.stamp > lastBspMap_stamp){
-        rovio_bspPropagateFilterStateSrv_request.filterStateMap = octomapWorld_getMapSrv_response.map; 
+        bspMsgs_propagateFilterStateSrv_request.filterStateMap = octomapWorld_getMapSrv_response.map; 
       }
 std::cout<< octomapWorld_getMapSrv_response.map.header.stamp <<std::endl;
       //Bsp: Populate filter (belief) state messages with values
-      rovio_bspPropagateFilterStateSrv_request.filterStateMsgInit = newNode->parent_->bsp_belief_state_;
+      bspMsgs_propagateFilterStateSrv_request.filterStateMsgInit = newNode->parent_->bsp_belief_state_;
       //Bsp: Populate trajectory reference messages with values
-      rovio::BSP_TrajectoryReferenceMsg bspTrajectoryReference_msg;
+      bsp_msgs::BSP_TrajectoryReferenceMsg bspTrajectoryReference_msg;
       bspTrajectoryReference_msg.header.frame_id = "body";
       bspTrajectoryReference_msg.header.stamp = ros::Time(newNode->parent_->bsp_belief_state_.t);
       geometry_msgs::Pose poseReference;
@@ -610,14 +610,14 @@ std::cout<< octomapWorld_getMapSrv_response.map.header.stamp <<std::endl;
       poseReference.orientation.z = qReference.z();
       poseReference.orientation.w = qReference.w();
       bspTrajectoryReference_msg.pose = poseReference;
-      std::vector<rovio::BSP_TrajectoryReferenceMsg> vecBspTrajectoryReferenceMsg;
+      std::vector<bsp_msgs::BSP_TrajectoryReferenceMsg> vecBspTrajectoryReferenceMsg;
       vecBspTrajectoryReferenceMsg.push_back(bspTrajectoryReference_msg);
-      rovio_bspPropagateFilterStateSrv_request.vecTrajectoryReferenceMsg = vecBspTrajectoryReferenceMsg;
+      bspMsgs_propagateFilterStateSrv_request.vecTrajectoryReferenceMsg = vecBspTrajectoryReferenceMsg;
       //Bsp: Call propagation service
-      if (params_.bspServiceClient_.call(rovio_bspPropagateFilterStateSrv_request, rovio_bspPropagateFilterStateSrv_response)){
+      if (params_.bspServiceClient_.call(bspMsgs_propagateFilterStateSrv_request, bspMsgs_propagateFilterStateSrv_response)){
         //ROS_INFO("bsp_planner(resample): service call /bsp_filter/propagate_filter_state success");
-        newNode->bsp_belief_state_ = rovio_bspPropagateFilterStateSrv_response.filterStateMsgFinal;
-        lastBspMap_stamp = rovio_bspPropagateFilterStateSrv_response.filterStateMap_stamp;
+        newNode->bsp_belief_state_ = bspMsgs_propagateFilterStateSrv_response.filterStateMsgFinal;
+        lastBspMap_stamp = bspMsgs_propagateFilterStateSrv_response.filterStateMap_stamp;
       }
       else{
         ROS_WARN("bsp_planner(resample): service call /bsp_filter/propagate_filter_state fail");

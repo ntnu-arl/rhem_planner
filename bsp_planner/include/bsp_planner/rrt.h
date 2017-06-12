@@ -57,9 +57,9 @@ class RrtTree : public TreeBase< Eigen::Vector4d >
   virtual void setStateFromOdometryMsg(const nav_msgs::Odometry& pose);
 
   //Nbvp & Bsp planning, reliant on system belief information
-  virtual void initialize(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
-  virtual void iterate(int numRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
-  virtual bool resampleBestEdge(int numReRuns, rovio::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
+  virtual void initialize(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
+  virtual void iterate(int numRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
+  virtual bool resampleBestEdge(int numReRuns, bsp_msgs::BSP_SrvSendFilterState::Response& bspSendFilterStateSrv_response);
 
   virtual std::vector<geometry_msgs::Pose> getBestBranch(std::string targetFrame);
   virtual std::vector<geometry_msgs::Pose> getBestEdge(std::string targetFrame);

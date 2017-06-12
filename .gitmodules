@@ -28,3 +28,6 @@
 [submodule "bsp_planner/thirdparty/kdtree"]
 	path = bsp_planner/thirdparty/kdtree
 	url = https://github.com/jtsiomb/kdtree
+[submodule "kindr"]
+	path = kindr
+	url = https://github.com/ethz-asl/kindr

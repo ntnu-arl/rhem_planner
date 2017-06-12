@@ -20,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
   visualization_msgs
+  bsp_msgs
   message_generation
   octomap_world
   tf
@@ -35,15 +36,24 @@ add_service_files(
 
 generate_messages(
   DEPENDENCIES
+  std_msgs
   geometry_msgs
   visualization_msgs
-  std_msgs
+  bsp_msgs
 )
 
 catkin_package(
   INCLUDE_DIRS include ${Eigen3_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS}
-  LIBRARIES nbvplanner ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES}
-  CATKIN_DEPENDS message_runtime roscpp geometry_msgs visualization_msgs octomap_world tf kdtree
+  LIBRARIES ${PROJECT_NAME} ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES}
+  CATKIN_DEPENDS
+  message_runtime
+  roscpp 
+  geometry_msgs
+  visualization_msgs
+  bsp_msgs
+  octomap_world
+  tf
+  kdtree
 )
 
 include_directories( include

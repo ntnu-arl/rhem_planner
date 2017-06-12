@@ -56,7 +56,7 @@ bspPlanning::bspPlanner<stateVec>::bspPlanner(const ros::NodeHandle& nh, const r
   plannerService_ = nh_.advertiseService("bsp_planner", &bspPlanning::bspPlanner<stateVec>::plannerCallback, this);
 
   //Bsp: BSP service client creation
-  while ( !(params_.bspServiceClient_ = nh_.serviceClient<rovio::BSP_SrvPropagateFilterState> ("bsp_filter/propagate_filter_state", false)) ){ //true for persistent
+  while ( !(params_.bspServiceClient_ = nh_.serviceClient<bsp_msgs::BSP_SrvPropagateFilterState> ("bsp_filter/propagate_filter_state", false)) ){ //true for persistent
     ROS_WARN("bsp_planner(ctor): ServiceClient \"bsp_filter/propagate_filter_state\" creation failed, re-attempting");
     sleep(1);
   }
@@ -172,9 +172,9 @@ bool bspPlanning::bspPlanner<stateVec>::plannerCallback(bsp_planner::bsp_srv::Re
   //Bsp: If BSP planning is required, call odometry filter to get initial belief state
   if (params_.bspEnable_){
     if (ros::service::exists("slam_filter/send_filter_state", false)){
-      rovio_bspSendFilterStateSrv_request.header.stamp = ros::Time::now();
-      rovio_bspSendFilterStateSrv_request.header.frame_id = params_.navigationFrame_;
-      if (ros::service::call("slam_filter/send_filter_state", rovio_bspSendFilterStateSrv_request, rovio_bspSendFilterStateSrv_response)){
+      bspMsgs_sendFilterStateSrv_request.header.stamp = ros::Time::now();
+      bspMsgs_sendFilterStateSrv_request.header.frame_id = params_.navigationFrame_;
+      if (ros::service::call("slam_filter/send_filter_state", bspMsgs_sendFilterStateSrv_request, bspMsgs_sendFilterStateSrv_response)){
         //ROS_INFO("bsp_planner: service call /slam_filter/send_filter_state success");
       }
       else{
@@ -190,7 +190,7 @@ bool bspPlanning::bspPlanner<stateVec>::plannerCallback(bsp_planner::bsp_srv::Re
 
   //Nbvp: Clear old tree and reinitialize
   tree_->clear();
-  tree_->initialize(num_runs_, rovio_bspSendFilterStateSrv_response);
+  tree_->initialize(num_runs_, bspMsgs_sendFilterStateSrv_response);
   vector_t path;
 
   //Nbvp: Iterate the tree construction method
@@ -208,7 +208,7 @@ bool bspPlanning::bspPlanner<stateVec>::plannerCallback(bsp_planner::bsp_srv::Re
       brkflag = true;
       break;
     }
-    tree_->iterate(num_runs_, rovio_bspSendFilterStateSrv_response);
+    tree_->iterate(num_runs_, bspMsgs_sendFilterStateSrv_response);
     loopCount++;
   }
   if (brkflag){
@@ -226,7 +226,7 @@ bool bspPlanning::bspPlanner<stateVec>::plannerCallback(bsp_planner::bsp_srv::Re
 
   //Bsp: Invoke nested bsp replanning level on best branch's 1st edge
   if (params_.bspEnable_){ 
-    bool res_resampleBestEdge = tree_->resampleBestEdge(num_reruns_, rovio_bspSendFilterStateSrv_response);
+    bool res_resampleBestEdge = tree_->resampleBestEdge(num_reruns_, bspMsgs_sendFilterStateSrv_response);
 
     //Bsp: BSP planning level done, publish entire MarkerArray (full nested replanning tree)
     tree_->publishPath(BSP_PLANLEVEL);

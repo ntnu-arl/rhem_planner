@@ -43,11 +43,12 @@ Make sure you have the following dependencies:
 
 * [ROS](http://wiki.ros.org/)
 * [Octomap](http://wiki.ros.org/octomap)
+* [catkin_tools](http://catkin-tools.readthedocs.io/en/latest/installing.html)
 
 Navigate back to your ros catkin workspace folder and proceed with a Release build:
 
 ```sh
-catkin_make -DCMAKE_BUILD_TYPE=Release
+catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
 # Testing the planner

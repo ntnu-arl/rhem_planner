@@ -10,6 +10,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>volumetric_mapping</run_depend>
+  <run_depend>bsp_planner</run_depend>
 
 </package>
