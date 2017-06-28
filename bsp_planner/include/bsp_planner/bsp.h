@@ -66,7 +66,10 @@ class bspPlanner
 
   ros::Subscriber posClient_;
   ros::Subscriber odomClient_;
-  ros::Subscriber pointcloud_sub_;
+  ros::Subscriber pointcloud_0_sub_;
+  ros::Subscriber pointcloud_1_sub_;
+  ros::Subscriber pointcloud_2_sub_;
+  ros::Subscriber pointcloud_3_sub_;
 
   //Planner main service (called)
   ros::ServiceServer plannerService_;

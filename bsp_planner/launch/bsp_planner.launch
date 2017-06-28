@@ -19,7 +19,7 @@
         <!-- bsp_planner params, "pose" or "odometry" must be present for bsp_planner to begin, "pointcloud_throttled" used to populate map -->
 	<remap from="pose" to="msf_core/pose" />
 	<remap from="odometry" to="rovio/odometry" />
-	<remap from="pointcloud_throttled" to="stereo_vision"/> 
+	<remap from="pointcloud_0_throttled" to="stereo_vision"/> 
         <!-- bsp_planner required services to make belief-state (uncertainty, map, landmarks) transactions -->
         <remap from="bsp_filter/propagate_filter_state" to="bsp_rovio/propagate_filter_state" />
         <remap from="slam_filter/send_filter_state" to="rovio/send_filter_state" /> 

@@ -68,7 +68,10 @@ bspPlanning::bspPlanner<stateVec>::bspPlanner(const ros::NodeHandle& nh, const r
   //Subscribers
   posClient_ = nh_.subscribe("pose", 10, &bspPlanning::bspPlanner<stateVec>::posCallback, this);
   odomClient_ = nh_.subscribe("odometry", 10, &bspPlanning::bspPlanner<stateVec>::odomCallback, this);
-  pointcloud_sub_ = nh_.subscribe("pointcloud_throttled", 1, &bspPlanning::bspPlanner<stateVec>::insertPointcloudWithTf, this);
+  pointcloud_0_sub_ = nh_.subscribe("pointcloud_0_throttled", 1, &bspPlanning::bspPlanner<stateVec>::insertPointcloudWithTf, this);
+  pointcloud_1_sub_ = nh_.subscribe("pointcloud_1_throttled", 1, &bspPlanning::bspPlanner<stateVec>::insertPointcloudWithTf, this);
+  pointcloud_2_sub_ = nh_.subscribe("pointcloud_2_throttled", 1, &bspPlanning::bspPlanner<stateVec>::insertPointcloudWithTf, this);
+  pointcloud_3_sub_ = nh_.subscribe("pointcloud_3_throttled", 1, &bspPlanning::bspPlanner<stateVec>::insertPointcloudWithTf, this);
 
   if (!setParams()) {
     ROS_ERROR("bsp_planner(ctor): Could not start the planner, parameters missing...");

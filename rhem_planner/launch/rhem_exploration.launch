@@ -74,7 +74,7 @@
         <!-- bsp_planner params, "pose" or "odometry" must be present for bsp_planner to begin, "pointcloud_throttled" used to populate map -->
 	<!--<remap from="pose" to="$(arg planner_pose)" />-->
 	<remap from="odometry" to="$(arg planner_odometry)" />
-	<remap from="pointcloud_throttled" to="$(arg planner_pointcloud)"/> 
+	<remap from="pointcloud_0_throttled" to="$(arg planner_pointcloud)"/> 
         <!-- bsp_planner required services to make belief-state (uncertainty, map, landmarks) transactions -->
         <remap from="bsp_filter/propagate_filter_state" to="$(arg propagate_filter_state_service)" />
         <remap from="slam_filter/send_filter_state" to="$(arg send_filter_state_service)" /> 
