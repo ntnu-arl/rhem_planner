@@ -4,9 +4,19 @@ Bsp
 {
 	cam_FoVx 90.0;				Camera horizontal Field-of-View
 	cam_FoVy 60.0;				Camera vertical Field-of-View
-	cam_FoVz 7.5;				Camera depth range Field-of-View
+	cam_FoVz 15.0;				Camera depth range Field-of-View
 	map_featureVisibilityThreshold 2;	Line-of-Sight octomap visibility threshold
-	bsp_Ts 0.1;				Propagation sampling time
+	bsp_Ts 0.05;				Propagation sampling time
+	xyz_damp -0.1;				Simulated closed-loop model parameters
+	xy_gyr_max 3.141592653;
+	z_gyr_max 1.570796327;
+	xy_gyr_P 10;
+	z_gyr_P 5;
+	rollpitch_max 0.34906585;		
+	xy_P 0.436332313;			
+	xy_D 0.218166156;
+	z_P 4.9;
+	z_D 2.5;
 }
 Common
 {
