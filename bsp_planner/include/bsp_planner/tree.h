@@ -194,7 +194,7 @@ class TreeBase
   TreeBase* subtree_;
 
   //Ad-hoc clearance
-  void getRootState(Eigen::Vector3d& rootState_);
+  void getRootState(stateVec& rootState_);
   void clearRootStateBBX(Eigen::Vector3d& boundingBox, const double& minZ = -std::numeric_limits<double>::infinity());
 
   //BSP planning

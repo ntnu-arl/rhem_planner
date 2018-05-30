@@ -109,11 +109,9 @@ void bspPlanning::TreeBase<stateVec>::insertPointcloudWithTf(const sensor_msgs::
 }
 
 template<typename stateVec>
-void bspPlanning::TreeBase<stateVec>::getRootState(Eigen::Vector3d& rootState_)
+void bspPlanning::TreeBase<stateVec>::getRootState(stateVec& rootState_)
 {
-  rootState_[0] = root_[0];
-  rootState_[1] = root_[1];
-  rootState_[2] = root_[2]; 
+  rootState_ = root_;
 }
 
 template<typename stateVec>
